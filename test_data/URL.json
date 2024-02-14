@@ -1,0 +1,7 @@
+{
+  "baseURL": "https://automationteststore.com",
+  "accountRegisterPage": "/index.php?rt=account/create",
+  "accountLoginPage": "/index.php?rt=account/login",
+  "accountPage": "/index.php?rt=account/account",
+  "contactUsPage": "/index.php?rt=content/contact"
+}

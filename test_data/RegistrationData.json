@@ -1,0 +1,32 @@
+{
+  "firstname": "First Name test 112233",
+
+  "lastname": "Last Name test 112233",
+
+  "email": "emailtest112233@mail.com",
+
+  "telephone": "01234546789",
+
+  "fax": "01234546789",
+
+  "company": "Company test",
+
+  "address_1": "Address 1 test",
+
+  "address_2": "Address 2 test",
+
+  "city": "City test",
+
+  "country_id": "pol",
+
+  "postcode": "00-001",
+
+  "zone_id": "lube",
+
+  "loginname": "testautomation112233",
+
+  "password": "testautomation112233",
+
+  "newsletter": true,
+  "agree": true
+}
