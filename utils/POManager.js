@@ -1,8 +1,9 @@
 import { HomePage } from '../page_objects/HomePage';
 import { AccountRegister } from '../page_objects/AccountRegister';
-import { AccountSuccess } from '../page_objects/AccountSuccess';
+import { AccountRegisterSuccess } from '../page_objects/AccountRegisterSuccess';
 import { AccountLogin } from '../page_objects/AccountLogin';
 import { Account } from '../page_objects/Account';
+import { AccountLogout } from '../page_objects/AccountLogout';
 
 export class POManager {
   constructor(page, apiContext) {
@@ -10,9 +11,10 @@ export class POManager {
     this.apiContext = apiContext;
     this.homePage = new HomePage(this.page);
     this.accountRegister = new AccountRegister(this.page);
-    this.accountSuccess = new AccountSuccess(this.page);
+    this.accountRegisterSuccess = new AccountRegisterSuccess(this.page);
     this.accountLogin = new AccountLogin(this.page);
     this.account = new Account(this.page);
+    this.accountLogout = new AccountLogout(this.page);
   }
 
   async getHomePage() {
@@ -23,8 +25,8 @@ export class POManager {
     return this.accountRegister;
   }
 
-  async getAccountSuccessPage() {
-    return this.accountSuccess;
+  async getAccountRegisterSuccessPage() {
+    return this.accountRegisterSuccess;
   }
 
   async getAccountLoginPage() {
@@ -33,5 +35,9 @@ export class POManager {
 
   async getAccountPage() {
     return this.account;
+  }
+
+  async getAccountLogoutPage() {
+    return this.accountLogout;
   }
 }

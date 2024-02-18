@@ -1,3 +1,5 @@
+import url from '../test_data/URL.json';
+
 export class AccountLogin {
   constructor(page) {
     this.page = page;
@@ -9,9 +11,19 @@ export class AccountLogin {
     this.btnLogin = page.getByTitle('Login');
   }
 
-  async fillLoginForm(json) {
-    const loginData = JSON.parse(JSON.stringify(json));
-    await this.inpLoginName.fill(loginData.loginname);
-    await this.inpPassword.fill(loginData.password);
+  async fillLoginForm(loginDataJson) {
+    await this.inpLoginName.fill(loginDataJson.loginname);
+    await this.inpPassword.fill(loginDataJson.password);
+  }
+
+  async loginUser(loginDataJson, context) {
+    try {
+      await this.page.goto(url.accountLoginPage);
+      await this.fillLoginForm(loginDataJson);
+      await this.btnLogin.click();
+      await context.storageState({ path: './test_data/LoggedInState.json' });
+    } catch (error) {
+      console.log(`Login failed: ${error}`);
+    }
   }
 }

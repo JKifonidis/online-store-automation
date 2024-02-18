@@ -6,10 +6,6 @@ export class AccountRegister {
     this.btnSubmit = page.getByTitle('Continue');
   }
 
-  // async getFormInputLocator(label) {
-  //   return this.page.locator(`#AccountFrm_${label}`);
-  // }
-
   async fillRegistrationForm(json) {
     const testData = JSON.parse(JSON.stringify(json));
     let locator;

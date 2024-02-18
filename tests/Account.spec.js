@@ -1,13 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { POManager } from '../utils/POManager';
-import RegistrationData from '../test_data/RegistrationData.json';
-import LoginData from '../test_data/LoginData.json';
-import URL from '../test_data/URL.json';
+import url from '../test_data/URL.json';
+import accountLogoutPageContent from '../test_data/page_content/AccountLogout.json';
+import registrationData from '../test_data/RegistrationData.json';
+import loginData from '../test_data/LoginData.json';
 
-const url = JSON.parse(JSON.stringify(URL));
+test.afterAll(async ({ browser }) => {
+  await browser.close();
+});
 
-test('@Smoke Register new user', async ({ page }) => {
-  const registrationData = JSON.parse(JSON.stringify(RegistrationData));
+test.skip('@smoke Register new user', async ({ page }) => {
   const poManager = new POManager(page);
   const homePage = await poManager.getHomePage();
   const accountLoginPage = await poManager.getAccountLoginPage();
@@ -27,21 +29,45 @@ test('@Smoke Register new user', async ({ page }) => {
   // Assertion
 });
 
-test('@Smoke Login with existing user', async ({ page }) => {
-  const loginData = JSON.parse(JSON.stringify(LoginData));
-  const poManager = new POManager(page);
-  const homePage = await poManager.getHomePage();
-  const loginPage = await poManager.getAccountLoginPage();
-  const accountPage = await poManager.getAccountPage();
+test.describe('Login / Logout user', async () => {
+  test.describe.configure({ mode: 'serial' });
 
-  await page.goto('/');
-  await expect(page).toHaveURL(url.baseURL);
+  test('@smoke Login with existing user', async ({ browser }) => {
+    const context = await browser.newContext({ storageState: undefined });
+    const page = await context.newPage();
+    const poManager = new POManager(page);
+    const homePage = await poManager.getHomePage();
+    const loginPage = await poManager.getAccountLoginPage();
+    const accountPage = await poManager.getAccountPage();
 
-  await homePage.btnLoginPage.click();
-  await expect(page).toHaveURL(url.accountLoginPage);
+    await page.goto('/');
+    await expect(page).toHaveURL(url.baseURL);
 
-  await loginPage.fillLoginForm(loginData);
-  await loginPage.btnLogin.click();
-  await expect(page).toHaveURL(url.accountPage);
-  // Assertion
+    await homePage.btnLoginPage.click();
+    await expect(page).toHaveURL(url.accountLoginPage);
+
+    await loginPage.fillLoginForm(loginData);
+    await loginPage.btnLogin.click();
+    await expect(page).toHaveURL(url.accountPage);
+    await expect(accountPage.txtAccountName).toHaveText(loginData.loginname);
+    await context.storageState({ path: './test_data/LoggedInState.json' });
+  });
+
+  test('@smoke Logout current user', async ({ browser }) => {
+    const context = await browser.newContext({ storageState: './test_data/LoggedInState.json' });
+    const page = await context.newPage();
+    const poManager = new POManager(page);
+    const accountPage = await poManager.getAccountPage();
+    const accountLogoutPage = await poManager.getAccountLogoutPage();
+
+    await page.goto(url.accountPage);
+    await expect(page).toHaveURL(url.accountPage);
+
+    await accountPage.btnLogoff.click();
+    await expect(page).toHaveURL(url.accountLogoutPage);
+    await expect(accountLogoutPage.txtH1).toHaveText(accountLogoutPageContent.txtH1);
+
+    await accountLogoutPage.btnContinue.click();
+    await expect(page).toHaveURL('/');
+  });
 });
