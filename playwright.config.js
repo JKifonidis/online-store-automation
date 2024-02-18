@@ -2,8 +2,9 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 100 * 1000,
-  fullyParallel: true,
+  timeout: 30 * 1000,
+  expect: { timeout: 5 * 1000 },
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -12,7 +13,9 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL: 'https://automationteststore.com',
-    trace: 'off',
+    headless: false,
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
@@ -20,16 +23,25 @@ module.exports = defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      headless: true,
+      trace: 'off',
+      screenshot: 'off',
     },
 
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
+    // headless: true,
+    // trace: 'retain-on-failure',
+    // screenshot: 'only-on-failure',
     // },
 
     // {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'] },
+    // headless: true,
+    // trace: 'retain-on-failure',
+    // screenshot: 'only-on-failure',
     // },
 
     /* Test against mobile viewports. */
