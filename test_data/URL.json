@@ -1,8 +1,10 @@
 {
   "baseURL": "https://automationteststore.com",
-  "accountRegisterPage": "/index.php?rt=account/create",
+  "accountRegPage": "/index.php?rt=account/create",
   "accountLoginPage": "/index.php?rt=account/login",
   "accountPage": "/index.php?rt=account/account",
   "accountLogoutPage": "https://automationteststore.com/index.php?rt=account/logout",
+  "productCategoryPage": "https://automationteststore.com/index.php?rt=product/category",
+  "cartPage": "https://automationteststore.com/index.php?rt=checkout/cart",
   "contactUsPage": "/index.php?rt=content/contact"
 }
