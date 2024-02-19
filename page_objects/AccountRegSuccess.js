@@ -1,4 +1,4 @@
-export class AccountRegisterSuccess {
+export class AccountRegSuccess {
   constructor(page) {
     this.page = page;
 
