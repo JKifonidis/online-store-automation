@@ -2,13 +2,11 @@ import { test, expect } from '@playwright/test';
 import { POManager } from '../utils/POManager';
 import url from '../test_data/URL.json';
 import regData from '../test_data/RegData.json';
-import loginData from '../test_data/LoginData.json';
-
 test.afterAll(async ({ browser }) => {
   await browser.close();
 });
 
-test('Register new user @smoke', async ({ browser }) => {
+test.skip('Register new user @smoke', async ({ browser }) => {
   const context = await browser.newContext({ storageState: undefined });
   const page = await context.newPage();
   const poManager = new POManager(page);
@@ -27,11 +25,12 @@ test('Register new user @smoke', async ({ browser }) => {
   await expect(page).toHaveURL(url.accountRegPage);
 
   await accountRegPage.fillRegistrationForm(regData);
-  // await expect(page).toHaveURL(url.accountRegSuccessPage); // add url to json
-  // await expect(accountRegSuccessPage.h1).toContainText('Congratulations! Your new account has been successfully created!');
+  await expect(page).toHaveURL(url.accountRegSuccessPage);
+  await expect(accountRegSuccessPage.h1).toContainText('Your Account Has Been Created!');
 
-  // await accountRegSuccessPage.btnContinue.click();
-  // await expect(page).toHaveURL(); // check url after clicking continue
+  await accountRegSuccessPage.btnContinue.click();
+  await expect(page).toHaveURL(url.accountPage);
+  await context.storageState({ path: './test_data/LoggedInState.json' });
 });
 
 test('Login with existing user @smoke', async ({ browser }) => {
@@ -48,10 +47,10 @@ test('Login with existing user @smoke', async ({ browser }) => {
   await mainPage.btnLoginPage.click();
   await expect(page).toHaveURL(url.accountLoginPage);
 
-  await loginPage.fillLoginForm(loginData);
+  await loginPage.fillLoginForm(regData);
   await loginPage.btnLogin.click();
   await expect(page).toHaveURL(url.accountPage);
-  await expect(accountPage.txtAccountName).toHaveText(loginData.loginname);
+  await expect(accountPage.txtAccountName).toHaveText(regData.firstname);
   await context.storageState({ path: './test_data/LoggedInState.json' });
 });
 

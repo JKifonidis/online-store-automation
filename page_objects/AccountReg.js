@@ -25,6 +25,6 @@ export class AccountReg {
       } else if (key === 'agree' && value) await locator.check();
       else await locator.fill(value);
     }
-    // await this.btnSubmit.click();
+    await this.btnSubmit.click();
   }
 }
