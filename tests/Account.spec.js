@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { POManager } from '../utils/POManager';
 import url from '../test_data/URL.json';
-import accountRegSuccessPageCon from '../test_data/page_content/AccountRegSuccess.json';
-import accountLogoutPageCon from '../test_data/page_content/AccountLogout.json';
 import regData from '../test_data/RegData.json';
 import loginData from '../test_data/LoginData.json';
 
@@ -30,7 +28,7 @@ test('Register new user @smoke', async ({ browser }) => {
 
   await accountRegPage.fillRegistrationForm(regData);
   // await expect(page).toHaveURL(url.accountRegSuccessPage); // add url to json
-  // await expect(accountRegSuccessPage.h1).toHaveText(accountRegSuccessPageCon.h1);
+  // await expect(accountRegSuccessPage.h1).toContainText('Congratulations! Your new account has been successfully created!');
 
   // await accountRegSuccessPage.btnContinue.click();
   // await expect(page).toHaveURL(); // check url after clicking continue
@@ -69,7 +67,7 @@ test('Logout current user @smoke', async ({ browser }) => {
 
   await accountPage.btnLogoff.click();
   await expect(page).toHaveURL(url.accountLogoutPage);
-  await expect(accountLogoutPage.h1).toHaveText(accountLogoutPageCon.h1);
+  await expect(accountLogoutPage.h1).toContainText('Account Logout');
 
   await accountLogoutPage.btnContinue.click();
   await expect(page).toHaveURL('/');
