@@ -5,6 +5,7 @@ export class Cart {
     // Locators
     this.txtCartEmptyMessage = this.page.locator('div.contentpanel');
     this.rows = this.page.locator('div.product-list tr');
+    this.txtCartTotals = this.page.locator('#totals_table tr td:nth-child(2)');
   }
 
   async getProductIndex(product) {
@@ -71,6 +72,21 @@ export class Cart {
     console.log(`Product cart total: ${total}`);
 
     return total;
+  }
+
+  async getTotals() {
+    const totals = [];
+
+    for (let i = 0; i < 3; i++) {
+      totals.push(await this.txtCartTotals.nth(i).textContent());
+    }
+
+    const totalsNumbers = totals.map(total => Number(total.replace('$', '')));
+    console.log(`Cart sub-total: ${totalsNumbers[0]}`);
+    console.log(`Cart shipping rate: ${totalsNumbers[1]}`);
+    console.log(`Cart total: ${totalsNumbers[2]}`);
+
+    return totalsNumbers;
   }
 
   async removeProduct(product) {

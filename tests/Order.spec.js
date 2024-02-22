@@ -7,7 +7,7 @@ test.afterAll(async ({ browser }) => {
   await browser.close();
 });
 
-test(`Add product "${productData[2].name}" to cart @smoke`, async ({ page }) => {
+test(`Add and remove product "${productData[2].name}" from cart @smoke`, async ({ page }) => {
   const poManager = new POManager(page);
   const topSection = await poManager.getTopSection();
   const productSection = await poManager.getProductSection();
@@ -38,12 +38,18 @@ test(`Add product "${productData[2].name}" to cart @smoke`, async ({ page }) => 
 
   await productSectionDetails.btnAddToCart.click();
 
+  await expect(page).toHaveURL(url.cartPage);
   expect(await cart.getProductImage(productData[2].name)).toEqual(productImage);
   expect(await cart.getProductName(productData[2].name)).toEqual(productData[2].name);
   expect(await cart.getProductModel(productData[2].name)).toEqual(productModel);
   expect(await cart.getProductPrice(productData[2].name)).toEqual(productPrice);
   expect(await cart.getProductQuantity(productData[2].name)).toEqual(1);
   expect(await cart.getProductTotalPrice(productData[2].name)).toEqual(productTotalPrice);
+
+  const [subTotal, shippingRate, total] = await cart.getTotals();
+
+  expect(subTotal).toEqual(productPrice);
+  expect(total).toEqual(subTotal + shippingRate);
 
   await cart.removeProduct(productData[2].name);
   await expect(cart.txtCartEmptyMessage).toContainText('Your shopping cart is empty!');
