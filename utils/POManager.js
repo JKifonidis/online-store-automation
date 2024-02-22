@@ -1,11 +1,13 @@
 import { TopSection } from '../page_objects/TopSection';
 import { ProductSection } from '../page_objects/ProductSection';
+import { ProductSectionDetails } from '../page_objects/ProductSectionDetails';
 import { MainPage } from '../page_objects/MainPage';
 import { AccountReg } from '../page_objects/AccountReg';
 import { AccountRegSuccess } from '../page_objects/AccountRegSuccess';
 import { AccountLogin } from '../page_objects/AccountLogin';
 import { Account } from '../page_objects/Account';
 import { AccountLogout } from '../page_objects/AccountLogout';
+import { Cart } from '../page_objects/Cart';
 
 export class POManager {
   constructor(page, apiContext) {
@@ -13,12 +15,14 @@ export class POManager {
     this.apiContext = apiContext;
     this.topSection = new TopSection(this.page);
     this.productSection = new ProductSection(this.page);
+    this.productSectionDetails = new ProductSectionDetails(this.page);
     this.mainPage = new MainPage(this.page);
     this.accountReg = new AccountReg(this.page);
     this.accountRegSuccess = new AccountRegSuccess(this.page);
     this.accountLogin = new AccountLogin(this.page);
     this.account = new Account(this.page);
     this.accountLogout = new AccountLogout(this.page);
+    this.cart = new Cart(this.page);
   }
 
   async getTopSection() {
@@ -27,6 +31,10 @@ export class POManager {
 
   async getProductSection() {
     return this.productSection;
+  }
+
+  async getProductSectionDetails() {
+    return this.productSectionDetails;
   }
 
   async getMainPage() {
@@ -51,5 +59,9 @@ export class POManager {
 
   async getAccountLogoutPage() {
     return this.accountLogout;
+  }
+
+  async getCartPage() {
+    return this.cart;
   }
 }

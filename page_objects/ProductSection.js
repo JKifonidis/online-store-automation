@@ -3,43 +3,48 @@ export class ProductSection {
     this.page = page;
 
     // Locators
-    this.thumbnails = this.page.locator('ul.thumbnails');
     this.h1 = this.page.locator('h1');
-    this.productLinks = this.page.locator('.fixed_wrapper a');
+    this.subcategories = this.page.locator('.thumbnails').first();
+    this.productElement = this.page.locator('.list-inline > div.col-md-3');
   }
 
-  async clickThumbnailImage(thumbnail) {
-    await this.thumbnails.getByText(thumbnail).click();
-  }
-
-  async getProductId(product) {
-    let productId;
-    const count = await this.productLinks.count();
+  async getProductIndex(product) {
+    const count = await this.productElement.count();
 
     for (let i = 0; i < count; i++) {
-      const linkName = await this.productLinks.nth(i).textContent();
-      if (linkName.toLowerCase() === product.toLowerCase()) {
-        const link = await this.productLinks.nth(i).getAttribute('href');
-        productId = link.split('id=').pop();
-      }
+      if ((await this.productElement.locator('.prdocutname').nth(i).textContent()) === product) return i;
     }
-    console.log(`Product Id: ${productId}`);
-    if (!productId) throw new Error(`Product with name "${product}" not found`);
+  }
 
-    return productId;
+  async getProductImage(product) {
+    const index = await this.getProductIndex(product);
+    let image = await this.productElement.nth(index).locator('img').getAttribute('src');
+
+    image = image.split('/').pop().split('-');
+    image.pop();
+    image = image.join('-');
+    console.log(`Product shop image: ${image}`);
+
+    return image;
   }
 
   async getProductPrice(product) {
-    const productId = await this.getProductId(product);
-    const price = await this.page.locator(`a[data-id="${productId}"] + div > div`).first().textContent();
+    const index = await this.getProductIndex(product);
+    let price = await this.productElement.nth(index).locator('.oneprice').textContent();
 
-    return Number(price.replace('$', ''));
+    price = Number(price.replace('$', ''));
+    console.log(`Product shop price: ${price}`);
+
+    return price;
   }
 
-  async addProductToCart(product) {
-    const productId = await this.getProductId(product);
+  async clickSubcategoryButton(subcategory) {
+    await this.subcategories.getByText(subcategory).click();
+  }
 
-    await this.page.locator(`a[data-id="${productId}"]`).first().click();
-    await this.page.getByTitle('Added to cart').click();
+  async clickViewButton(product) {
+    const index = await this.getProductIndex(product);
+    await this.productElement.nth(index).locator('> div > a').hover();
+    await this.productElement.nth(index).locator('.details').click();
   }
 }
