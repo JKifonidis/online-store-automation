@@ -6,6 +6,13 @@ export class Cart {
     this.txtCartEmptyMessage = this.page.locator('div.contentpanel');
     this.rows = this.page.locator('div.product-list tr');
     this.txtCartTotals = this.page.locator('#totals_table tr td:nth-child(2)');
+    this.inpCouponCode = this.page.locator('#coupon_coupon');
+    this.btnCouponApply = this.page.locator('#apply_coupon_btn');
+    this.ddlCountry = this.page.locator('#estimate_country');
+    this.ddlState = this.page.locator('#estimate_country_zones');
+    this.inpPostCode = this.page.locator('#estimate_postcode');
+    this.ddlShippingRate = this.page.locator('#shippings');
+    this.btnCheckout = this.page.locator('#cart_checkout2');
   }
 
   async getProductIndex(product) {
@@ -87,6 +94,22 @@ export class Cart {
     console.log(`Cart total: ${totalsNumbers[2]}`);
 
     return totalsNumbers;
+  }
+
+  async selectCountry(country) {
+    await this.ddlCountry.selectOption(country);
+  }
+
+  async selectState(state) {
+    await this.ddlState.selectOption(state);
+  }
+
+  async fillPostCode(code) {
+    await this.inpPostCode.fill(code);
+  }
+
+  async selectShippingRate(rate) {
+    await this.ddlShippingRate.selectOption(rate);
   }
 
   async removeProduct(product) {

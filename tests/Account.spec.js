@@ -30,7 +30,7 @@ test('Register new user @smoke', async ({ browser }) => {
 
   await accountRegPage.fillRegistrationForm(regData);
   // await expect(page).toHaveURL(url.accountRegSuccessPage); // add url to json
-  // await expect(accountRegSuccessPage.txtH1).toHaveText(accountRegSuccessPageCon.txtH1);
+  // await expect(accountRegSuccessPage.h1).toHaveText(accountRegSuccessPageCon.h1);
 
   // await accountRegSuccessPage.btnContinue.click();
   // await expect(page).toHaveURL(); // check url after clicking continue
@@ -69,7 +69,7 @@ test('Logout current user @smoke', async ({ browser }) => {
 
   await accountPage.btnLogoff.click();
   await expect(page).toHaveURL(url.accountLogoutPage);
-  await expect(accountLogoutPage.txtH1).toHaveText(accountLogoutPageCon.txtH1);
+  await expect(accountLogoutPage.h1).toHaveText(accountLogoutPageCon.h1);
 
   await accountLogoutPage.btnContinue.click();
   await expect(page).toHaveURL('/');

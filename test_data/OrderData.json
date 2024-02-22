@@ -1,0 +1,31 @@
+[
+  {
+    "category": "Apparel & accessories",
+    "subcategory": "T-shirts",
+    "name": "Casual 3/4 Sleeve Baseball T-Shirt",
+    "country": "Poland",
+    "state": "Lubelskie",
+    "postalCode": "20-000",
+    "shippingRate": "2"
+  },
+
+  {
+    "category": "Hair Care",
+    "subcategory": "Conditioner",
+    "name": "Seaweed Conditioner",
+    "country": "Poland",
+    "state": "Lubelskie",
+    "postalCode": "20-000",
+    "shippingRate": "2"
+  },
+
+  {
+    "category": "Books",
+    "subcategory": "Paperback",
+    "name": "Allegiant by Veronica Roth",
+    "country": "Poland",
+    "state": "Lubelskie",
+    "postalCode": "20-000",
+    "shippingRate": "2"
+  }
+]
