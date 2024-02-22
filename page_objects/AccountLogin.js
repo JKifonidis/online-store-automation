@@ -21,7 +21,9 @@ export class AccountLogin {
       await this.page.goto(url.accountLoginPage);
       await this.fillLoginForm(loginDataJson);
       await this.btnLogin.click();
-      await context.storageState({ path: './test_data/LoggedInState.json' });
+      const storage = await context.storageState();
+
+      return storage.cookies;
     } catch (error) {
       console.log(`Login failed: ${error}`);
     }
