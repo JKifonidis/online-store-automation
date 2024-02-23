@@ -7,7 +7,7 @@ test.afterAll(async ({ browser }) => {
   await browser.close();
 });
 
-test.only(`Add and remove product "${orderData[2].name}" from cart @smoke`, async ({ page }) => {
+test(`Add and remove product "${orderData[2].name}" from cart @smoke`, async ({ page }) => {
   const poManager = new POManager(page);
   const topSection = await poManager.getTopSection();
   const productSection = await poManager.getProductSection();

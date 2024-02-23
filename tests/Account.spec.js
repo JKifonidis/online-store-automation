@@ -7,7 +7,7 @@ test.afterAll(async ({ browser }) => {
   await browser.close();
 });
 
-test.skip('Register new user @smoke', async ({ browser }) => {
+test('Register new user @smoke', async ({ browser }) => {
   const context = await browser.newContext({ storageState: undefined });
   const page = await context.newPage();
   const poManager = new POManager(page);
