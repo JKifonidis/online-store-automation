@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { POManager } from '../utils/POManager';
 import url from '../test_data/URL.json';
 import regData from '../test_data/RegData.json';
+
 test.afterAll(async ({ browser }) => {
   await browser.close();
 });
