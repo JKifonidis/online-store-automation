@@ -17,8 +17,11 @@ export class Cart {
 
   async getProductIndex(product) {
     const count = await this.rows.count();
+
     for (let i = 1; i < count; i++) {
-      if ((await this.rows.nth(i).locator('td').nth(1).locator('a').textContent()) === product) return i;
+      if ((await this.rows.nth(i).locator('td').nth(1).locator('a').textContent()) === product.name) {
+        return i;
+      } else throw new Error(`Product ${product.name} not found`);
     }
   }
 
@@ -36,7 +39,7 @@ export class Cart {
 
   async getProductName(product) {
     const index = await this.getProductIndex(product);
-    let name = await this.rows.nth(index).locator('td').nth(1).locator('a').textContent();
+    const name = await this.rows.nth(index).locator('td').nth(1).locator('a').textContent();
 
     console.log(`Product cart name: ${name}`);
 
@@ -45,7 +48,7 @@ export class Cart {
 
   async getProductModel(product) {
     const index = await this.getProductIndex(product);
-    let model = await this.rows.nth(index).locator('td').nth(2).textContent();
+    const model = await this.rows.nth(index).locator('td').nth(2).textContent();
 
     console.log(`Product cart model: ${model}`);
 
@@ -64,7 +67,7 @@ export class Cart {
 
   async getProductQuantity(product) {
     const index = await this.getProductIndex(product);
-    let quantity = Number(await this.rows.nth(index).locator('td').nth(4).locator('input').getAttribute('value'));
+    const quantity = Number(await this.rows.nth(index).locator('td').nth(4).locator('input').getAttribute('value'));
 
     console.log(`Product cart quantity: ${quantity}`);
 
@@ -82,34 +85,38 @@ export class Cart {
   }
 
   async getTotals() {
-    const totals = [];
+    const totalsArr = [];
 
     for (let i = 0; i < 3; i++) {
-      totals.push(await this.txtCartTotals.nth(i).textContent());
+      totalsArr.push(await this.txtCartTotals.nth(i).textContent());
     }
 
-    const totalsNumbers = totals.map(total => Number(total.replace('$', '')));
-    console.log(`Cart sub-total: ${totalsNumbers[0]}`);
-    console.log(`Cart shipping rate: ${totalsNumbers[1]}`);
-    console.log(`Cart total: ${totalsNumbers[2]}`);
+    const totals = {};
+    totals.subTotal = Number(totalsArr[0].replace('$', ''));
+    totals.shippingRate = Number(totalsArr[1].replace('$', ''));
+    totals.total = Number(totalsArr[2].replace('$', ''));
 
-    return totalsNumbers;
+    console.log(`Cart sub-total: ${totals.subTotal}`);
+    console.log(`Cart shipping rate: ${totals.shippingRate}`);
+    console.log(`Cart total: ${totals.total}`);
+
+    return totals;
   }
 
-  async selectCountry(country) {
-    await this.ddlCountry.selectOption(country);
+  async selectCountry(product) {
+    await this.ddlCountry.selectOption(product.country);
   }
 
-  async selectState(state) {
-    await this.ddlState.selectOption(state);
+  async selectState(product) {
+    await this.ddlState.selectOption(product.state);
   }
 
-  async fillPostCode(code) {
-    await this.inpPostCode.fill(code);
+  async fillPostCode(product) {
+    await this.inpPostCode.fill(product.code);
   }
 
-  async selectShippingRate(rate) {
-    await this.ddlShippingRate.selectOption(rate);
+  async selectShippingRate(product) {
+    await this.ddlShippingRate.selectOption(product.rate);
   }
 
   async removeProduct(product) {

@@ -7,7 +7,7 @@ test.afterAll(async ({ browser }) => {
   await browser.close();
 });
 
-test('Register new user @smoke', async ({ browser }) => {
+test('Register new user @smoke @Account', async ({ browser }) => {
   const context = await browser.newContext({ storageState: undefined });
   const page = await context.newPage();
   const poManager = new POManager(page);
@@ -34,7 +34,7 @@ test('Register new user @smoke', async ({ browser }) => {
   await context.storageState({ path: './test_data/LoggedInState.json' });
 });
 
-test('Login with existing user @smoke', async ({ browser }) => {
+test(`Login with user: ${regData.loginname} and password: ${regData.password} @smoke @Account`, async ({ browser }) => {
   const context = await browser.newContext({ storageState: undefined });
   const page = await context.newPage();
   const poManager = new POManager(page);
@@ -55,7 +55,7 @@ test('Login with existing user @smoke', async ({ browser }) => {
   await context.storageState({ path: './test_data/LoggedInState.json' });
 });
 
-test('Logout current user @smoke', async ({ browser }) => {
+test('Logout current user @smoke @Account', async ({ browser }) => {
   const context = await browser.newContext({ storageState: './test_data/LoggedInState.json' });
   const page = await context.newPage();
   const poManager = new POManager(page);

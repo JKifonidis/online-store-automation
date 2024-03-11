@@ -6,7 +6,7 @@ export class TopSection {
     this.catMenu = 'ul.categorymenu > li > a';
   }
 
-  async clickCatMenuButton(category) {
-    await this.page.locator(this.catMenu).getByText(category).click();
+  async clickCatMenuButton(product) {
+    await this.page.locator(this.catMenu).getByText(product.category).click();
   }
 }

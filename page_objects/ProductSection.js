@@ -12,7 +12,7 @@ export class ProductSection {
     const count = await this.productElement.count();
 
     for (let i = 0; i < count; i++) {
-      if ((await this.productElement.locator('.prdocutname').nth(i).textContent()) === product) return i;
+      if ((await this.productElement.locator('.prdocutname').nth(i).textContent()) === product.name) return i;
     }
   }
 
@@ -38,12 +38,13 @@ export class ProductSection {
     return price;
   }
 
-  async clickSubcategoryButton(subcategory) {
-    await this.subcategories.getByText(subcategory).click();
+  async clickSubcategoryButton(product) {
+    await this.subcategories.getByText(product.subcategory).click();
   }
 
   async clickViewButton(product) {
     const index = await this.getProductIndex(product);
+
     await this.productElement.nth(index).locator('> div > a').hover();
     await this.productElement.nth(index).locator('.details').click();
   }

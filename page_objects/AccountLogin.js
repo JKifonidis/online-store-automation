@@ -15,17 +15,4 @@ export class AccountLogin {
     await this.inpLoginName.fill(loginDataJson.loginname);
     await this.inpPassword.fill(loginDataJson.password);
   }
-
-  async loginUser(loginDataJson, context) {
-    try {
-      await this.page.goto(url.accountLoginPage);
-      await this.fillLoginForm(loginDataJson);
-      await this.btnLogin.click();
-      const storage = await context.storageState();
-
-      return storage.cookies;
-    } catch (error) {
-      console.log(`Login failed: ${error}`);
-    }
-  }
 }
