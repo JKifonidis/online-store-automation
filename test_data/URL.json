@@ -4,9 +4,11 @@
   "accountRegSuccessPage": "https://automationteststore.com/index.php?rt=account/success",
   "accountLoginPage": "/index.php?rt=account/login",
   "accountPage": "/index.php?rt=account/account",
+  "accountOrderHistoryPage": "https://automationteststore.com/index.php?rt=account/history",
   "accountLogoutPage": "https://automationteststore.com/index.php?rt=account/logout",
   "productCategoryPage": "https://automationteststore.com/index.php?rt=product/category",
   "cartPage": "https://automationteststore.com/index.php?rt=checkout/cart",
   "checkoutPage": "https://automationteststore.com/index.php?rt=checkout/confirm",
+  "checkoutSuccessPage": "https://automationteststore.com/index.php?rt=checkout/success",
   "contactUsPage": "/index.php?rt=content/contact"
 }

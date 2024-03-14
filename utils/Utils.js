@@ -15,7 +15,7 @@ export class Utils {
     try {
       await this.page.goto(url.accountLoginPage);
       await this.accountLogin.fillLoginForm(loginDataJson);
-      await this.btnLogin.click();
+      await this.accountLogin.btnLogin.click();
       const storage = await context.storageState();
 
       return storage.cookies;
@@ -38,5 +38,12 @@ export class Utils {
     await this.productSection.productElement.nth(index).locator('.productcart').click();
 
     return productDetails;
+  }
+
+  async getCurrentDate() {
+    const now = new Date();
+    const date = `${now.getMonth() + 1 < 10 ? 0 : ''}${now.getMonth() + 1}/${now.getDate() < 10 ? 0 : ''}${now.getDate()}/${now.getFullYear()}`;
+
+    return date;
   }
 }

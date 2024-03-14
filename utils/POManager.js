@@ -8,6 +8,9 @@ import { AccountLogin } from '../page_objects/AccountLogin';
 import { Account } from '../page_objects/Account';
 import { AccountLogout } from '../page_objects/AccountLogout';
 import { Cart } from '../page_objects/Cart';
+import { Checkout } from '../page_objects/Checkout';
+import { CheckoutSuccess } from '../page_objects/CheckoutSuccess';
+import { AccountOrderHistory } from '../page_objects/AccountOrderHistory';
 
 export class POManager {
   constructor(page, apiContext) {
@@ -21,19 +24,22 @@ export class POManager {
     this.accountRegSuccess = new AccountRegSuccess(this.page);
     this.accountLogin = new AccountLogin(this.page);
     this.account = new Account(this.page);
+    this.accountOrderHistory = new AccountOrderHistory(this.page);
     this.accountLogout = new AccountLogout(this.page);
     this.cart = new Cart(this.page);
+    this.checkout = new Checkout(this.page);
+    this.checkoutSuccess = new CheckoutSuccess(this.page);
   }
 
-  async getTopSection() {
+  async getTopSectionPage() {
     return this.topSection;
   }
 
-  async getProductSection() {
+  async getProductSectionPage() {
     return this.productSection;
   }
 
-  async getProductSectionDetails() {
+  async getProductSectionDetailsPage() {
     return this.productSectionDetails;
   }
 
@@ -57,11 +63,23 @@ export class POManager {
     return this.account;
   }
 
+  async getAccountOrderHistoryPage() {
+    return this.accountOrderHistory;
+  }
+
   async getAccountLogoutPage() {
     return this.accountLogout;
   }
 
   async getCartPage() {
     return this.cart;
+  }
+
+  async getCheckoutPage() {
+    return this.checkout;
+  }
+
+  async getCheckoutSuccessPage() {
+    return this.checkoutSuccess;
   }
 }

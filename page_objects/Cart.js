@@ -19,9 +19,7 @@ export class Cart {
     const count = await this.rows.count();
 
     for (let i = 1; i < count; i++) {
-      if ((await this.rows.nth(i).locator('td').nth(1).locator('a').textContent()) === product.name) {
-        return i;
-      } else throw new Error(`Product ${product.name} not found`);
+      if ((await this.rows.nth(i).locator('td').nth(1).locator('a').textContent()) === product.name) return i;
     }
   }
 

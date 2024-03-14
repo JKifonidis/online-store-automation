@@ -7,6 +7,9 @@ test.afterAll(async ({ browser }) => {
   await browser.close();
 });
 
+// TODO Add comments
+// TODO Add expect messages
+
 test('Register new user @smoke @Account', async ({ browser }) => {
   const context = await browser.newContext({ storageState: undefined });
   const page = await context.newPage();
